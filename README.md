@@ -103,7 +103,3 @@ The glove firmware and the serial-reading ROS node are not included in this repo
 ## 📚 References (from the report)
 Tiwari et al. (2018), Tikam et al. (2019), Afzal et al. (2017), Herbaz et al. (2021), Yu et al. (2023), Kouao (2021, YouTube tutorial), Megalingam et al. (2018), Jhang et al. (2017), Korsoveczki et al. (2018). The full list is in the [report](docs/Gesture_Controlled_Robotic_Arm_Mini_Project_Report.docx).
 
-## 👥 Team
-Group mini project, Dept. of Robotics and Automation, Adi Shankara Institute of Engineering & Technology, Kalady.
-
-**My contribution:** <!-- write your own contribution here -->
