@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+
+<robot name="open_manipulator" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ================= MACRO ================= -->
+  <xacro:macro name="open_manipulator_x" params="prefix=''">
+
+    <xacro:property name="meshes_file_direction"
+      value="package://my_robot_description/meshes"/>
+
+    <!-- LINK1 -->
+    <link name="${prefix}link1">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/link1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}joint1" type="revolute">
+      <parent link="base_link"/>
+      <child link="${prefix}link1"/>
+      <origin xyz="-0.012 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="10" velocity="1" lower="-3.14" upper="3.14"/>
+    </joint>
+
+    <!-- LINK2 -->
+    <link name="${prefix}link2">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/link2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}joint2" type="revolute">
+      <parent link="${prefix}link1"/>
+      <child link="${prefix}link2"/>
+      <origin xyz="0.01 0 0.035" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="10" velocity="1" lower="-1.57" upper="1.57"/>
+    </joint>
+
+    <!-- LINK3 -->
+    <link name="${prefix}link3">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/link3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}joint3" type="revolute">
+      <parent link="${prefix}link2"/>
+      <child link="${prefix}link3"/>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="10" velocity="1" lower="-1.57" upper="1.57"/>
+    </joint>
+
+    <!-- LINK4 -->
+    <link name="${prefix}link4">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/link4.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}joint4" type="revolute">
+      <parent link="${prefix}link3"/>
+      <child link="${prefix}link4"/>
+      <origin xyz="0.03 0 0.13" rpy="0 0 0"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="10" velocity="1" lower="-1" upper="1"/>
+    </joint>
+
+    <!-- LINK5 -->
+    <link name="${prefix}link5">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/link5.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}joint5" type="revolute">
+      <parent link="${prefix}link4"/>
+      <child link="${prefix}link5"/>
+      <origin xyz="0.13 0 0.003" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="10" velocity="1" lower="-1" upper="1"/>
+    </joint>
+
+    <!-- ================= GRIPPER ================= -->
+
+    <!-- LEFT GRIPPER -->
+    <link name="${prefix}gripper_left">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/gripper_left_palm.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}gripper_left_joint" type="prismatic">
+      <parent link="${prefix}link5"/>
+      <child link="${prefix}gripper_left"/>
+      <origin xyz="0.08 0 0.006"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="10" velocity="1" lower="-0.02" upper="0.02"/>
+    </joint>
+
+    <!-- RIGHT GRIPPER -->
+    <link name="${prefix}gripper_right">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="${meshes_file_direction}/gripper_right_palm.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${prefix}gripper_right_joint" type="prismatic">
+      <parent link="${prefix}link5"/>
+      <child link="${prefix}gripper_right"/>
+      <origin xyz="0.08 0 0.006"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="10" velocity="1" lower="-0.02" upper="0.02"/>
+      <mimic joint="${prefix}gripper_left_joint" multiplier="1"/>
+    </joint>
+
+  </xacro:macro>
+
+  <!-- ================= BASE ================= -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://my_robot_description/meshes/plate.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- ================= CALL ================= -->
+  <xacro:open_manipulator_x/>
+
+</robot>
